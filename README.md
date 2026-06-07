@@ -20,6 +20,12 @@ Team 31
 * YAMUNA SHRI T
 * VOMKAR BS
 
+* ## Team Members Resume
+
+* YASVANTH P 
+* YAMUNA SHRI T
+* VOMKAR BS
+
 ---
 
 # 🌐 Deliverable Links
@@ -228,8 +234,7 @@ Results Displayed to User
 
 ## Clone Repository
 
-git clone YOUR_GITHUB_REPOSITORY_LINK
-
+(https://github.com/PYASVANTH/Ticket-triange-agent/tree/main)
 ---
 
 ## Navigate to Project Folder
