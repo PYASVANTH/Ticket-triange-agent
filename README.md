@@ -22,9 +22,9 @@ Team 31
 
 * ## Team Members Resume
 
-* YASVANTH P 
-* YAMUNA SHRI T
-* VOMKAR BS
+* YASVANTH P - [resume](<resumes/yasvanth resume - 23IT062.pdf (1).pdf>)
+* YAMUNA SHRI T - [resume](<resumes/Yamuna Shri resume category B.pdf>)
+* VOMKAR BS - [resume](<resumes/RESUME (3)  vomkar.pdf>)
 
 ---
 
