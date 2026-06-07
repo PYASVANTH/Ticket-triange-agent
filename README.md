@@ -231,7 +231,7 @@ Results Displayed to User
 
 ## Navigate to Project Folder
 
-cd Ticket-Triangle-Agent
+cd Ticket-Triage-Agent
 
 ---
 
