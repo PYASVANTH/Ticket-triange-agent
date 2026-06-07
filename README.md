@@ -1,4 +1,4 @@
-# 🚀 Ticket Triangle Agent
+# 🚀 Ticket Triage Agent
 
 An AI-powered Support Ticket Classification and Prioritization System built using Python, Flask, React, SQLite, and LLM-based reasoning.
 
