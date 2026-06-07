@@ -28,13 +28,6 @@ Team 31
 
 ---
 
-# 🌐 Deliverable Links
-
-## Live Deployment Link
-
-Currently not deployed.
-
----
 
 ## Demo Video
 
@@ -50,7 +43,7 @@ https://www.loom.com/share/99d3ccdc5a5a46beabf18580d7b8dc32
 
 # 📌 Project Overview
 
-Ticket Triangle Agent is an AI-powered support ticket automation system that helps organizations automatically classify and prioritize customer support tickets.
+Ticket Triage Agent is an AI-powered support ticket automation system that helps organizations automatically classify and prioritize customer support tickets.
 
 The system reduces manual effort by using LLM reasoning and prompt engineering to analyze support tickets and generate intelligent classifications.
 
@@ -156,7 +149,7 @@ using:
 
 # 📁 Project Structure
 
-Ticket-Triangle-Agent/
+Ticket-Triage-Agent/
 
 ├── frontend/
 
@@ -426,7 +419,7 @@ The demonstration video includes:
 
 # ✅ Project Outcome
 
-Ticket Triangle Agent successfully automates support ticket classification and prioritization using AI-powered reasoning, helping organizations reduce manual effort and improve support efficiency.
+Ticket Triage Agent successfully automates support ticket classification and prioritization using AI-powered reasoning, helping organizations reduce manual effort and improve support efficiency.
 
 ---
 
@@ -434,4 +427,4 @@ Ticket Triangle Agent successfully automates support ticket classification and p
 
 Team Number – 31
 
-Project: Ticket Triangle Agent
+Project: Ticket Triage Agent
