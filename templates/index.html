@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ticket Triage Agent Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#020617,#0f172a,#1e1b4b,#064e3b);
+    background-size:300% 300%;
+    animation:bgMove 10s ease infinite;
+    overflow-x:hidden;
+    color:#fff;
+    position:relative;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Moving dotted background */
+body::before{
+    content:"";
+    position:fixed;
+    inset:-50%;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.20) 1.5px, transparent 1.5px);
+    background-size:35px 35px;
+    animation:moveDots 14s linear infinite;
+    opacity:0.6;
+    z-index:-3;
+}
+
+@keyframes moveDots{
+    from{transform:translate(0,0) rotate(0deg);}
+    to{transform:translate(-180px,-180px) rotate(2deg);}
+}
+
+/* Grid */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        linear-gradient(90deg, rgba(34,197,94,0.10) 1px, transparent 1px),
+        linear-gradient(rgba(59,130,246,0.10) 1px, transparent 1px);
+    background-size:80px 80px;
+    animation:gridMove 8s linear infinite;
+    z-index:-2;
+}
+
+@keyframes gridMove{
+    from{background-position:0 0;}
+    to{background-position:80px 80px;}
+}
+
+.dashboard-wrapper{
+    position:relative;
+    z-index:5;
+    padding:30px 0;
+}
+
+.glow-circle{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(85px);
+    opacity:0.65;
+    z-index:-1;
+    animation:float 6s ease-in-out infinite alternate;
+}
+
+.glow-circle.one{
+    width:280px;
+    height:280px;
+    background:#22c55e;
+    top:8%;
+    left:5%;
+}
+
+.glow-circle.two{
+    width:330px;
+    height:330px;
+    background:#3b82f6;
+    bottom:5%;
+    right:6%;
+    animation-delay:2s;
+}
+
+.glow-circle.three{
+    width:230px;
+    height:230px;
+    background:#a855f7;
+    top:50%;
+    left:35%;
+    animation-delay:1s;
+}
+
+@keyframes float{
+    from{transform:translateY(0) scale(1);}
+    to{transform:translateY(-35px) scale(1.08);}
+}
+
+/* Header */
+.dashboard-header{
+    background:rgba(15,23,42,0.82);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.16);
+    border-radius:22px;
+    padding:22px 25px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    animation:slideDown 0.8s ease;
+}
+
+@keyframes slideDown{
+    from{opacity:0; transform:translateY(-30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.dashboard-title{
+    font-size:28px;
+    font-weight:800;
+    margin:0;
+    background:linear-gradient(135deg,#22c55e,#38bdf8,#a855f7);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.logout-btn{
+    border:none;
+    border-radius:14px;
+    padding:11px 20px;
+    background:linear-gradient(135deg,#ef4444,#b91c1c);
+    color:#fff;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.4s;
+}
+
+.logout-btn:hover{
+    color:#fff;
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(239,68,68,0.45);
+}
+
+/* Glass Card */
+.glass-card{
+    background:rgba(15,23,42,0.82);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.16);
+    border-radius:22px;
+    box-shadow:0 20px 55px rgba(0,0,0,0.38);
+    animation:fadeUp 0.9s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(35px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* Upload */
+.upload-title{
+    font-size:18px;
+    font-weight:700;
+    color:#e5e7eb;
+    margin-bottom:12px;
+}
+
+.form-control{
+    height:60px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.10);
+    color:#fff;
+}
+
+.form-control:focus{
+    background:rgba(255,255,255,0.16);
+    color:#fff;
+    border-color:#22c55e;
+    box-shadow:0 0 18px rgba(34,197,94,0.45);
+}
+
+.form-control::file-selector-button{
+    height:100%;
+    padding:0 20px;
+    margin-right:15px;
+    border:none;
+    background:linear-gradient(135deg,#22c55e,#3b82f6);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.action-btn{
+    border:none;
+    border-radius:14px;
+    padding:12px 18px;
+    color:white;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.4s;
+    display:inline-block;
+}
+
+.btn-analyze{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+.btn-download{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.action-btn:hover{
+    color:#fff;
+    transform:translateY(-3px) scale(1.03);
+}
+
+/* Stat Cards */
+.stat-card{
+    border-radius:20px;
+    padding:22px 15px;
+    text-align:center;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.18);
+    backdrop-filter:blur(16px);
+    transition:0.4s;
+    animation:zoomIn 0.9s ease;
+}
+
+.stat-card:hover{
+    transform:translateY(-8px);
+}
+
+@keyframes zoomIn{
+    from{opacity:0; transform:scale(0.9);}
+    to{opacity:1; transform:scale(1);}
+}
+
+.stat-card h6{
+    font-size:14px;
+    color:#e5e7eb;
+}
+
+.stat-card h2{
+    font-weight:800;
+    margin:0;
+}
+
+.total-card{
+    background:linear-gradient(135deg,rgba(255,255,255,0.16),rgba(255,255,255,0.05));
+}
+
+.bug-card{
+    background:linear-gradient(135deg,#ef4444,#7f1d1d);
+}
+
+.feature-card{
+    background:linear-gradient(135deg,#22c55e,#064e3b);
+}
+
+.billing-card{
+    background:linear-gradient(135deg,#06b6d4,#164e63);
+}
+
+.other-card{
+    background:linear-gradient(135deg,#64748b,#1e293b);
+}
+
+/* Table */
+.table-card-title{
+    color:#fff;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.table{
+    --bs-table-bg:rgba(255,255,255,0.06);
+    --bs-table-color:#e5e7eb;
+    --bs-table-border-color:rgba(255,255,255,0.13);
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.table thead th{
+    background:rgba(2,6,23,0.92) !important;
+    color:#38bdf8;
+    font-size:14px;
+    white-space:nowrap;
+}
+
+.table tbody tr{
+    transition:0.3s;
+}
+
+.table tbody tr:hover{
+    background:rgba(34,197,94,0.12);
+    
+}
+
+.badge{
+    padding:8px 11px;
+    border-radius:12px;
+    font-size:12px;
+}
+
+.empty-row{
+    padding:30px !important;
+    color:#cbd5e1 !important;
+}
+
+@media(max-width:768px){
+    .dashboard-title{
+        font-size:22px;
+    }
+
+    .dashboard-header{
+        gap:15px;
+        flex-direction:column;
+        text-align:center;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="glow-circle one"></div>
+<div class="glow-circle two"></div>
+<div class="glow-circle three"></div>
+
+<div class="container dashboard-wrapper">
+
+    <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="dashboard-title">
+            <i class="fa-solid fa-ticket me-2"></i>
+            Ticket Triage Agent Dashboard
+        </h2>
+
+        <a href="/logout" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket me-1"></i>
+            Logout
+        </a>
+
+    </div>
+
+    <!-- Upload Section -->
+    <div class="glass-card p-4 mb-4">
+
+        <form method="POST" action="/analyze" enctype="multipart/form-data">
+
+            <label class="upload-title">
+                <i class="fa-solid fa-cloud-arrow-up me-2"></i>
+                Upload JSON Tickets
+            </label>
+
+            <input type="file" name="tickets" multiple accept=".json" class="form-control" required>
+
+            <div class="mt-3 d-flex gap-2 flex-wrap">
+
+                <button type="submit" class="action-btn btn-analyze">
+                    <i class="fa-solid fa-magnifying-glass-chart me-1"></i>
+                    Analyze Tickets
+                </button>
+
+                <a href="/download" class="action-btn btn-download">
+                    <i class="fa-solid fa-file-csv me-1"></i>
+                    Download CSV
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Statistics -->
+    <div class="row mb-4">
+
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="stat-card total-card">
+                <h6>Total</h6>
+                <h2>{{ total }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="stat-card bug-card">
+                <h6>Bug</h6>
+                <h2>{{ bug_count }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="stat-card feature-card">
+                <h6>Feature</h6>
+                <h2>{{ feature_count }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="stat-card billing-card">
+                <h6>Billing</h6>
+                <h2>{{ billing_count }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="stat-card other-card">
+                <h6>Other</h6>
+                <h2>{{ other_count }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Ticket Table -->
+    <div class="glass-card p-3">
+
+        <h4 class="table-card-title">
+            <i class="fa-solid fa-robot me-2"></i>
+            ReAct Ticket Analysis Results
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Thought</th>
+                        <th>Action</th>
+                        <th>Observation</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for ticket in tickets %}
+
+                    <tr>
+                        <td>{{ ticket[0] }}</td>
+                        <td>{{ ticket[1] }}</td>
+                        <td>{{ ticket[2] }}</td>
+                        <td>{{ ticket[3] }}</td>
+
+                        <td>
+                            {% if ticket[4] == 'Bug' %}
+                                <span class="badge bg-danger">{{ ticket[4] }}</span>
+                            {% elif ticket[4] == 'Feature' %}
+                                <span class="badge bg-success">{{ ticket[4] }}</span>
+                            {% elif ticket[4] == 'Billing' %}
+                                <span class="badge bg-info">{{ ticket[4] }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ ticket[4] }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if ticket[5] == 'P1' %}
+                                <span class="badge bg-danger">P1 - Critical</span>
+                            {% elif ticket[5] == 'P2' %}
+                                <span class="badge bg-warning text-dark">P2 - High</span>
+                            {% elif ticket[5] == 'P3' %}
+                                <span class="badge bg-primary">P3 - Medium</span>
+                            {% elif ticket[5] == 'P4' %}
+                                <span class="badge bg-success">P4 - Low</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ ticket[5] }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ ticket[6] }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                {% if not tickets %}
+
+                    <tr>
+                        <td colspan="7" class="text-center empty-row">
+                            <i class="fa-regular fa-folder-open me-2"></i>
+                            No tickets analyzed yet.
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

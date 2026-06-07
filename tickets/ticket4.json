@@ -1,0 +1,5 @@
+{
+  "ticket_id": "TKT004",
+  "title": "Incorrect invoice amount",
+  "description": "The invoice generated for customer accounts shows incorrect tax calculations."
+}

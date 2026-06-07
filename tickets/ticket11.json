@@ -1,0 +1,5 @@
+{
+  "ticket_id": "TKT011",
+  "title": "Application crashes on startup",
+  "description": "Desktop application closes immediately after launching on Windows systems."
+}

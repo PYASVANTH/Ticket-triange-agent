@@ -1,0 +1,5 @@
+{
+  "ticket_id": "TKT010",
+  "title": "Profile picture upload fails",
+  "description": "Uploading profile pictures results in an unknown server error."
+}

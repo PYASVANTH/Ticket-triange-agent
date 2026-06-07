@@ -1,0 +1,5 @@
+{
+  "ticket_id": "TKT014",
+  "title": "Search function returns no results",
+  "description": "Users cannot find records using the search feature despite data being available."
+}

@@ -1,0 +1,5 @@
+{
+  "ticket_id": "TKT002",
+  "title": "Password reset email not received",
+  "description": "Users are requesting password resets but no email is being delivered."
+}

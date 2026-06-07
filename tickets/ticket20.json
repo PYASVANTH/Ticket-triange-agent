@@ -1,0 +1,5 @@
+{
+  "ticket_id": "TKT020",
+  "title": "User interface alignment issue",
+  "description": "Buttons overlap on smaller screens causing a poor user experience."
+}
